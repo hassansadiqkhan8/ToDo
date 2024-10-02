@@ -1,0 +1,18 @@
+{% extends "main.html" %}
+
+{% block content %}
+
+<h3>Add Todo</h3>
+<form action="" method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit">Save</button>
+    <a href="{% url "home" %}">Go Back</a>
+
+</form>
+
+
+
+
+
+{% endblock %}

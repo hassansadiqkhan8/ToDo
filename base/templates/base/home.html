@@ -1,0 +1,38 @@
+{% extends "main.html" %} {% block content %}
+
+<style>
+  .home-container {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+  }
+</style>
+
+<h2>This is home page</h2>
+<div class="home-container">
+  <div></div>
+  <div class="todo-list">
+
+    
+    {% for todo in todos %}
+    <div>
+        <form method="post" action="{% url 'home' %}">
+            {% csrf_token %}
+
+            <input type="hidden" name="todo_id" value="{{ todo.id }}">
+            <input type="checkbox" name="completed" onchange="this.form.submit()" {% if todo.completed %}checked{% endif %}>
+            <span {% if todo.completed %}class="completed"{% endif %}> <strong>{{ todo.title }}</strong></span>
+        </form>
+        <a href="{% url "update-todo" todo.id %}"><button>Edit</button></a>
+        
+    </div>
+    {% endfor %}
+
+    <div>
+        <br>
+        <a href="{% url "add_todo" %}"><button>Add ToDo</button></a>
+    </div>
+  </div>
+  <div></div>
+</div>
+
+{% endblock %}
