@@ -1,18 +1,40 @@
 {% extends "main.html" %}
+{% load widget_tweaks %}
 
 {% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h3 class="text-center mb-4">Add New Todo</h3>
 
-<h3>Add Todo</h3>
-<form action="" method="post">
-    {% csrf_token %}
-    {{form.as_p}}
-    <button type="submit">Save</button>
-    <a href="{% url "home" %}">Go Back</a>
+            <!-- Form starts here -->
+            <form action="" method="post" class="card p-4 shadow-sm">
+                {% csrf_token %}
+                
+                <!-- Form Fields -->
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title</label>
+                    {{ form.title | add_class:"form-control" }} <!-- Adds Bootstrap's form-control class -->
+                </div>
+                
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    {{ form.description|add_class:"form-control" }}
+                </div>
 
-</form>
+                <div class="mb-3 form-check">
+                    {{ form.completed|add_class:"form-check-input" }}
+                    <label for="completed" class="form-check-label">Completed</label>
+                </div>
 
+                <!-- Save Button -->
+                <button type="submit" class="btn btn-success w-100 mb-3">Save</button>
 
-
-
-
+                <!-- Go Back Button -->
+                <a href="{% url 'home' %}" class="btn btn-secondary w-100">Go Back</a>
+            </form>
+            <!-- Form ends here -->
+        </div>
+    </div>
+</div>
 {% endblock %}

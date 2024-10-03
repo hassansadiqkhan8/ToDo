@@ -1,0 +1,59 @@
+{% extends "main.html" %}
+{% load widget_tweaks %}  <!-- Ensure to load widget tweaks for add_class filter -->
+
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card p-4 shadow-sm">
+                <h3 class="text-center mb-4">Register</h3>
+
+                <form action="" method="post">
+                    {% csrf_token %}
+
+                    <!-- Form Fields -->
+                     {% for field in form %}
+                     <div class="mb-3">
+                        <label for="name" class="form-label">{{field.label}}</label>
+                        {{ field|add_class:"form-control" }} <!-- Using widget tweaks to add Bootstrap class -->
+                    </div>
+                     
+                     {% endfor %}
+                    {% comment %} <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        {{ form.name|add_class:"form-control" }} <!-- Using widget tweaks to add Bootstrap class -->
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        {{ form.username|add_class:"form-control" }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        {{ form.email|add_class:"form-control" }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password1" class="form-label">Password</label>
+                        {{ form.password1|add_class:"form-control" }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password2" class="form-label">Confirm Password</label>
+                        {{ form.password2|add_class:"form-control" }}
+                    </div> {% endcomment %}
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary w-100 mb-3">Register</button>
+
+                    <!-- Login Link -->
+                    <p class="text-center">Already signed up? <a href="{% url 'login' %}">Login</a></p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

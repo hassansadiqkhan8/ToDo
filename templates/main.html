@@ -9,18 +9,57 @@
     <title>ToDo</title>
 </head>
 <style>
-    body{
-        background-color: cadetblue;
+    body {
+        background-color: #ECDFCC; /* Light gray background for a clean look */
     }
+
+    .custom-navbar {
+        background-color: #A5B68D !important; /* Custom background color */
+    }
+
     .completed {
         text-decoration: line-through;
     }
+
+    
+    .todos-container {
+        max-width: 800px; /* Optional: restricts the width of the todo container */
+        margin: 0 auto; /* Centers the container */
+    }
+    
+    .todo-item {
+        transition: background-color 0.3s; /* Smooth transition for hover effect */
+    }
+    
+    .todo-item:hover {
+        background-color: #e2e3e5; /* Slightly darker gray on hover */
+    }
+    
 </style>
+
+
 
 <body>
     {% include "navbar.html" %}
+
+    {% if messages %}
+        <div class="container mt-2">
+            <div class="row">
+                <div class="col-md-6 offset-md-3">
+                    {% for message in messages %}
+                        <div class="alert alert-info alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
     {% block content %}
-        
     {% endblock %}
 
     <script src="{% static "js/script.js" %}"></script>
