@@ -9,19 +9,22 @@ from django.contrib.auth.decorators import login_required
 
 
 def login_page(request):
-    if request.method == "POST":
-        email = request.POST.get("email").lower()
-        password = request.POST.get("password")
+    if request.user.is_authenticated:
+        return redirect("home")
+    else:
+        if request.method == "POST":
+            email = request.POST.get("email").lower()
+            password = request.POST.get("password")
 
-        user = authenticate(request, email=email, password = password)
+            user = authenticate(request, email=email, password = password)
 
-        if user is not None:
-            login(request, user)
-            return redirect("home")
-        else:
-            messages.error(request, "email or password are incorrect...")
+            if user is not None:
+                login(request, user)
+                return redirect("home")
+            else:
+                messages.error(request, "email or password are incorrect...")
 
-    return render(request, "base/login_page.html")
+        return render(request, "base/login_page.html")
 
 
 def logout_page(request):
@@ -31,20 +34,23 @@ def logout_page(request):
 
 
 def register_user(request):
-    form = MyUserCreationForm()
-    if request.method == "POST":
-        form = MyUserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)
-            user.username = user.username.lower()
-            user.save()
-            login(request, user)
-            return redirect("home")
-        else:
-            messages.error(request, "There was an error processing your registration. Please try again.")
+    if request.user.is_authenticated:
+        return redirect("home")
     else:
         form = MyUserCreationForm()
-    return render(request, "base/register_page.html", {"form": form})
+        if request.method == "POST":
+            form = MyUserCreationForm(request.POST)
+            if form.is_valid():
+                user = form.save(commit=False)
+                user.username = user.username.lower()
+                user.save()
+                login(request, user)
+                return redirect("home")
+            else:
+                messages.error(request, "There was an error processing your registration. Please try again.")
+        else:
+            form = MyUserCreationForm()
+        return render(request, "base/register_page.html", {"form": form})
 
 
 
